@@ -222,7 +222,7 @@ export default function OrganizerEventsPage() {
             {events.length === 0 ? (
               <Card>
                 <CardContent className="py-12 text-center">
-                  <p className="text-muted-foreground mb-4">You haven't created any events yet</p>
+                  <p className="text-muted-foreground mb-4">You haven&#39;t created any events yet</p>
                   <Link href="/organizer/events/create">
                     <Button>
                       <Plus className="h-4 w-4 mr-2" />

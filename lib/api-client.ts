@@ -16,7 +16,11 @@ import {
   PlatformStats, 
   PlatformSettings, 
   EventStats,
-  Category
+  Category,
+  APIError,
+  PurchaseTicketResponse,
+  ReviewRequest,
+  ModeratorStats
 } from './types';
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api/v1';
 
@@ -66,13 +70,13 @@ class APIClient {
   }
 
   // Authentication Endpoints
-  async register(data: RegisterRequest): Promise<any> {
+  async register(data: RegisterRequest): Promise<{ message: string }> {
     const response = await fetch(`${API_BASE_URL}/auth/register`, {
       method: 'POST',
       headers: this.getHeaders(),
       body: JSON.stringify(data),
     });
-    const result = await this.handleResponse<any>(response);
+    const result = await this.handleResponse<{ message: string }>(response);
     // Don't set token - user needs to verify email first
     return result;
   }
@@ -279,6 +283,13 @@ class APIClient {
     return this.handleResponse<Event[]>(response);
   }
 
+  async getMyReviews(): Promise<Event[]> {
+    const response = await fetch(`${API_BASE_URL}/moderator/reviews`, {
+      headers: this.getHeaders(true),
+    });
+    return this.handleResponse<Event[]>(response);
+  }
+
   async getEventForReview(id: string): Promise<Event> {
     const response = await fetch(`${API_BASE_URL}/moderator/events/${id}`, {
       headers: this.getHeaders(true),
@@ -300,20 +311,6 @@ class APIClient {
       headers: this.getHeaders(true),
     });
     return this.handleResponse<ModeratorStats>(response);
-  }
-
-  async getMyReviews(): Promise<Event[]> {
-    const response = await fetch(`${API_BASE_URL}/moderator/reviews`, {
-      headers: this.getHeaders(true),
-    });
-    return this.handleResponse<Event[]>(response);
-  }
-
-  async getEventForReview(id: string): Promise<Event> {
-    const response = await fetch(`${API_BASE_URL}/moderator/events/${id}`, {
-      headers: this.getHeaders(true),
-    });
-    return this.handleResponse<Event>(response);
   }
 
   // Admin Endpoints

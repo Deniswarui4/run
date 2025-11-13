@@ -17,6 +17,7 @@ import { Input } from '@/components/ui/input';
 import { Calendar, MapPin, User, Clock, Ticket } from 'lucide-react';
 import { toast } from 'sonner';
 import { useCurrency } from '@/lib/currency';
+import Image from 'next/image';
 
 export default function EventDetailsPage() {
   const params = useParams();

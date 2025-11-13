@@ -1,26 +1,21 @@
 'use client';
 
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function PaymentCallbackPage() {
+function CallbackHandler() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    // Get the payment reference from URL params
     const reference = searchParams.get('reference') || searchParams.get('trxref');
-    
     if (reference) {
-      // Redirect to the verify page with the reference
       router.replace(`/payments/verify?reference=${reference}`);
     } else {
-      // If no reference, redirect to events page
       router.replace('/events');
     }
   }, [router, searchParams]);
 
-  // Show loading while redirecting
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="text-center">
@@ -28,5 +23,20 @@ export default function PaymentCallbackPage() {
         <p>Redirecting to payment verification...</p>
       </div>
     </div>
+  );
+}
+
+export default function PaymentCallbackPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p>Loading...</p>
+        </div>
+      </div>
+    }>
+      <CallbackHandler />
+    </Suspense>
   );
 }

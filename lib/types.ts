@@ -10,6 +10,7 @@ export interface User {
   role: UserRole;
   is_active: boolean;
   is_verified: boolean;
+  two_factor_enabled?: boolean;
   created_at: string;
 }
 
@@ -29,6 +30,7 @@ export interface RegisterRequest {
 
 export interface LoginRequest {
   email: string;
+  password: string;
 }
 
 // Event Types
@@ -52,7 +54,9 @@ export interface Event {
   start_date: string;
   end_date: string;
   venue: string;
+  address?: string;
   city: string;
+  country?: string;
   category: string;
   category_id?: string;
   category_info?: Category;

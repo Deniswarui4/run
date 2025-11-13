@@ -11,6 +11,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import { Shield, QrCode, Smartphone, AlertCircle, CheckCircle, XCircle } from 'lucide-react';
+import Image from 'next/image';
 
 interface TwoFASetupData {
   secret: string;
@@ -20,7 +21,6 @@ interface TwoFASetupData {
 
 export function TwoFactorAuth() {
   const { user, refreshUser } = useAuth();
-  const [loading, setLoading] = useState(false);
   const [setupLoading, setSetupLoading] = useState(false);
   const [enableLoading, setEnableLoading] = useState(false);
   const [disableLoading, setDisableLoading] = useState(false);
@@ -38,8 +38,9 @@ export function TwoFactorAuth() {
       setSetupData(response);
       setShowSetup(true);
       toast.success('2FA setup initiated. Please scan the QR code with your authenticator app.');
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to setup 2FA');
+    } catch (err: unknown) {
+      const error = err as { response?: { data?: { error?: string } } };
+      setError(error.response?.data?.error || 'Failed to setup 2FA');
       toast.error('Failed to setup 2FA');
     } finally {
       setSetupLoading(false);
@@ -62,8 +63,9 @@ export function TwoFactorAuth() {
       setVerificationCode('');
       setSetupData(null);
       toast.success('2FA has been enabled successfully!');
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to enable 2FA');
+    } catch (err: unknown) {
+      const error = err as { response?: { data?: { error?: string } } };
+      setError(error.response?.data?.error || 'Failed to enable 2FA');
       toast.error('Failed to enable 2FA');
     } finally {
       setEnableLoading(false);
@@ -84,8 +86,9 @@ export function TwoFactorAuth() {
       await refreshUser();
       setVerificationCode('');
       toast.success('2FA has been disabled successfully!');
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to disable 2FA');
+    } catch (err: unknown) {
+      const error = err as { response?: { data?: { error?: string } } };
+      setError(error.response?.data?.error || 'Failed to disable 2FA');
       toast.error('Failed to disable 2FA');
     } finally {
       setDisableLoading(false);
@@ -121,7 +124,7 @@ export function TwoFactorAuth() {
             <div>
               <p className="font-medium text-green-800">2FA is active</p>
               <p className="text-sm text-green-600">
-                You'll need to enter a code from your authenticator app when signing in.
+                You&apos;ll need to enter a code from your authenticator app when signing in.
               </p>
             </div>
           </div>
@@ -202,10 +205,12 @@ export function TwoFactorAuth() {
                     </p>
 
                     <div className="flex justify-center mb-4">
-                      <img
+                      <Image
                         src={setupData.qr_code}
                         alt="2FA QR Code"
                         className="border rounded-lg p-2 bg-white"
+                        width={200}
+                        height={200}
                         style={{ maxWidth: '200px', height: 'auto' }}
                       />
                     </div>

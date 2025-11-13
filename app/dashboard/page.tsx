@@ -114,7 +114,7 @@ export default function AttendeesDashboard() {
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2">Welcome back, {user?.first_name}!</h1>
-          <p className="text-muted-foreground">Here's your event activity overview</p>
+          <p className="text-muted-foreground">Here&#39;s your event activity overview</p>
         </div>
 
         {/* Stats Cards */}

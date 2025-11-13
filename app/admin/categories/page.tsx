@@ -412,7 +412,7 @@ export default function AdminCategoriesPage() {
             <AlertDialogHeader>
               <AlertDialogTitle>Delete Category</AlertDialogTitle>
               <AlertDialogDescription>
-                Are you sure you want to delete "{selectedCategory?.name}"? 
+                Are you sure you want to delete &#34;{selectedCategory?.name}&#34;? 
                 This action cannot be undone and may affect existing events using this category.
               </AlertDialogDescription>
             </AlertDialogHeader>

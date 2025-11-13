@@ -16,7 +16,7 @@ interface AuthContextType {
     last_name: string;
     phone?: string;
     role: 'attendee' | 'organizer';
-  }) => Promise<void>;
+  }) => Promise<{ message: string }>;
   logout: () => void;
   refreshUser: () => Promise<void>;
 }

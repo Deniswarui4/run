@@ -98,7 +98,7 @@ export function FeaturedEvents() {
             <Star className="h-6 w-6 text-yellow-500 fill-current" />
           </div>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Don't miss out on these handpicked amazing events happening near you
+            Don&#39;t miss out on these handpicked amazing events happening near you
           </p>
         </div>
 

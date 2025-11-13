@@ -52,12 +52,12 @@ export default function AdminUsersPage() {
       if (Array.isArray(data)) {
         console.log('Setting users from array, length:', data.length);
         setUsers(data);
-      } else if (data && typeof data === 'object' && 'users' in data && Array.isArray((data as any).users)) {
-        console.log('Setting users from data.users, length:', (data as any).users.length);
-        setUsers((data as any).users);
-      } else if (data && typeof data === 'object' && 'data' in data && Array.isArray((data as any).data)) {
-        console.log('Setting users from data.data, length:', (data as any).data.length);
-        setUsers((data as any).data);
+      } else if (data && typeof data === 'object' && 'users' in data && Array.isArray((data as { users: User[] }).users)) {
+        console.log('Setting users from data.users, length:', (data as { users: User[] }).users.length);
+        setUsers((data as { users: User[] }).users);
+      } else if (data && typeof data === 'object' && 'data' in data && Array.isArray((data as { data: User[] }).data)) {
+        console.log('Setting users from data.data, length:', (data as { data: User[] }).data.length);
+        setUsers((data as { data: User[] }).data);
       } else {
         console.warn('Unexpected users data format:', data);
         setUsers([]);
