@@ -63,7 +63,10 @@ export default function EventDetailsPage() {
   };
 
   const addToCart = () => {
-    if (!selectedTicketType) return;
+    if (!selectedTicketType || !selectedTicketType.id) {
+      toast.error('Invalid ticket type selected');
+      return;
+    }
 
     // Check if ticket type already in cart
     const existingIndex = cart.findIndex(item => item.ticket_type_id === selectedTicketType.id);
@@ -110,9 +113,16 @@ export default function EventDetailsPage() {
 
     try {
       setPurchasing(true);
+      const validItems = cart.filter(item => item.ticket_type_id && item.quantity > 0);
+
+      if (validItems.length === 0) {
+        toast.error('Cart contains invalid items');
+        return;
+      }
+
       const response = await apiClient.purchaseTickets({
         event_id: event.id,
-        items: cart.map(item => ({
+        items: validItems.map(item => ({
           ticket_type_id: item.ticket_type_id,
           quantity: item.quantity,
         })),
